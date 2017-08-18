@@ -1,3 +1,6 @@
+/*Desiderio González Ricardo Abraham*/
+/*Versión de visual: 2015 comunity*/
+
 /* Este programa dibuja una "Tetera", este objeto esta definido
  * en GLUT, se crea una fuente de luz, y un material */
 
