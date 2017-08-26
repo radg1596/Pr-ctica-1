@@ -106,7 +106,6 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glEnd();
 
 //A: Se usan  6 poligonos
-//G: Se usarán 5 poligonos
 	//1)
 	glBegin(GL_POLYGON);
 		glColor3f(0.0, 0.0, 0.0);
@@ -157,6 +156,50 @@ void display(void)   // Creamos la funcion donde se dibuja
 		glVertex3f(25.0f, 16.0f, -1.2f);
 		glVertex3f(25.0f, 14.0f, -1.2f);
 		glVertex3f(23.0f, 14.0f, -1.2f);
+	glEnd();
+
+//Estrella: Se usaran 6 poligonos
+//1)
+	glBegin(GL_POLYGON);
+		glColor3f(0.0, 0.0, 0.0);
+		glVertex3f(12.0f, 8.0f, -1.2f);
+		glVertex3f(14.0f,5.0f, -1.2f);
+		glVertex3f(10.0f, 5.0f, -1.2f);
+	glEnd();
+
+	//2)
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.0, 1.0);
+		glVertex3f(7.0f, 5.0f, -1.2f);
+		glVertex3f(10.0f, 5.0f, -1.2f);
+		glVertex3f(10.0f, 3.0f, -1.2f);
+	glEnd();
+
+	//3)
+	glBegin(GL_POLYGON);
+	glColor3f(0.0, 1.0, 0.0);
+		glVertex3f(14.0f, 5.0f, -1.2f);
+		glVertex3f(10.0f, 5.0f, -1.2f);
+		glVertex3f(10.0f, 3.0f, -1.2f);
+		glVertex3f(12.0f, 2.0f, -1.2f);
+		glVertex3f(14.0f, 3.0f, -1.2f);
+		glVertex3f(17.0f, 5.0f, -1.2f);
+	glEnd();
+
+	//4)
+	glBegin(GL_POLYGON);
+	glColor3f(0.0, 1.0, 1.0);
+	glVertex3f(10.0f, 3.0f, -1.2f);
+	glVertex3f(12.0f, 2.0f, -1.2f);
+	glVertex3f(7.0f, 0.0f, -1.2f);
+	glEnd();
+
+	//5)
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.0, 0.0);
+	glVertex3f(14.0f, 3.0f, -1.2f);
+	glVertex3f(17.0f, 0.0f, -1.2f);
+	glVertex3f(12.0f, 2.0f, -1.2f);
 	glEnd();
 
 	glFlush();
