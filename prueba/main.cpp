@@ -162,7 +162,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glFlush();
 
 }
-
+ 
 void reshape ( int width , int height )   // Creamos funcion Reshape
 {
 	if (height==0)										// Prevenir division entre cero
