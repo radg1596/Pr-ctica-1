@@ -1,26 +1,23 @@
-//Semestre 2017 - 2
+//Semestre 2018 - 2
 //************************************************************//
 //************************************************************//
 //************** Alumno (s): *********************************//
 //*************											******//
 //*************											******//
 //************************************************************//
-//Desiderio González Ricardo Abraham
-//Visual studio 2015
-//#include <gl/gl.h>     // The GL Header File
-//#include <GL/glut.h>   // The GL Utility Toolkit (Glut) Header
-//#include <stdlib.h>
 #include "Main.h"
 
+float transZ = -10.0f;
+float transY= 0.0;
+float transX = 0.0;
 float angleX = 0.0f;
 float angleY = 0.0f;
 float angleZ = 0.0f;
-float transX = 0.0f;
-float transY = 0.0f;
-float transZ = -5.0f;
+int screenW = 0.0;
+int screenH = 0.0;
 
 
-void InitGL ( GLvoid )     // Inicializamos parametros
+void InitGL ( void )     // Inicializamos parametros
 {
 
 	//glShadeModel(GL_SMOOTH);							// Habilitamos Smooth Shading
@@ -33,61 +30,21 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
-void color(char c)
-{
-	switch (c)
-	{
-	case'V':
-		glColor3f(0.0, 1.0, 0.0);//Verde fuerte
-		break;
-	case'v':
-		glColor3f(0.196078, 0.8, 0.196078);//Verde claro
-		break;
-	case'Z':
-		glColor3f(0.0, 0.0, 1.0);//Azul fuerte
-		break;
-	case'z':
-		glColor3f(0.0, 1.0, 1.0);//Azul claro
-		break;
-	case'a':
-		glColor3f(1.0, 1.0, 0.0);//Amarillo
-		break;
-	case'r':
-		glColor3f(1.0, 0.0, 0.0);//Rojo
-		break;
-	case'm':
-		glColor3f(1.0, 0.0, 1.0);//Morado
-		break;
-	case'c':
-		glColor3f(0.647059, 0.164706, 0.164706);//Cafe
-		break;
-	case'n':
-		glColor3f(1.0, 0.5, 0.0);//Naranja
-		break;
-	case'N':
-		glColor3f(0.0, 0.0, 0.0);//Negro
-		break;
-	case'b':
-		glColor3f(1.0, 1.0, 1.0);//Blanco
-		break;
-	}
-}
-
-void prisma(char front, char back, char right, char left, char bottom, char top, float base, float altura)
+void prisma(void)
 {
 	GLfloat vertice [8][3] = {
-				{base/2 ,-altura/2, base/2 },    //Coordenadas Vértice 0 V0
-				{-base/2 ,-altura/2, base/2 },    //Coordenadas Vértice 1 V1
-				{-base/2 ,-altura/2, -base/2 },    //Coordenadas Vértice 2 V2
-				{ base/2 ,-altura/2, -base/2 },    //Coordenadas Vértice 3 V3
-				{ base/2 ,altura/2, base/2 },    //Coordenadas Vértice 4 V4
-				{ base/2 ,altura/2, -base/2 },    //Coordenadas Vértice 5 V5
-				{-base/2 ,altura/2, -base/2 },    //Coordenadas Vértice 6 V6
-				{-base/2 ,altura/2, base/2 },    //Coordenadas Vértice 7 V7
+				{0.5 ,-0.5, 0.5},    //Coordenadas Vértice 0 V0
+				{-0.5 ,-0.5, 0.5},    //Coordenadas Vértice 1 V1
+				{-0.5 ,-0.5, -0.5},    //Coordenadas Vértice 2 V2
+				{0.5 ,-0.5, -0.5},    //Coordenadas Vértice 3 V3
+				{0.5 ,0.5, 0.5},    //Coordenadas Vértice 4 V4
+				{0.5 ,0.5, -0.5},    //Coordenadas Vértice 5 V5
+				{-0.5 ,0.5, -0.5},    //Coordenadas Vértice 6 V6
+				{-0.5 ,0.5, 0.5},    //Coordenadas Vértice 7 V7
 				};
 
 		glBegin(GL_POLYGON);	//Front
-			color(front);
+			//glColor3f(1.0,0.0,0.0);
 			glVertex3fv(vertice[0]);
 			glVertex3fv(vertice[4]);
 			glVertex3fv(vertice[7]);
@@ -95,7 +52,7 @@ void prisma(char front, char back, char right, char left, char bottom, char top,
 		glEnd();
 
 		glBegin(GL_POLYGON);	//Right
-			color(right);
+			//glColor3f(0.0,0.0,1.0);
 			glVertex3fv(vertice[0]);
 			glVertex3fv(vertice[3]);
 			glVertex3fv(vertice[5]);
@@ -103,7 +60,7 @@ void prisma(char front, char back, char right, char left, char bottom, char top,
 		glEnd();
 
 		glBegin(GL_POLYGON);	//Back
-			color(back);
+			//glColor3f(0.0,1.0,0.0);
 			glVertex3fv(vertice[6]);
 			glVertex3fv(vertice[5]);
 			glVertex3fv(vertice[3]);
@@ -111,7 +68,7 @@ void prisma(char front, char back, char right, char left, char bottom, char top,
 		glEnd();
 
 		glBegin(GL_POLYGON);  //Left
-			color(left);
+			//glColor3f(1.0,1.0,1.0);
 			glVertex3fv(vertice[1]);
 			glVertex3fv(vertice[7]);
 			glVertex3fv(vertice[6]);
@@ -119,7 +76,7 @@ void prisma(char front, char back, char right, char left, char bottom, char top,
 		glEnd();
 
 		glBegin(GL_POLYGON);  //Bottom
-			color(bottom);
+			//glColor3f(0.4,0.2,0.6);
 			glVertex3fv(vertice[0]);
 			glVertex3fv(vertice[1]);
 			glVertex3fv(vertice[2]);
@@ -127,7 +84,7 @@ void prisma(char front, char back, char right, char left, char bottom, char top,
 		glEnd();
 
 		glBegin(GL_POLYGON);  //Top
-			color(top);
+			//glColor3f(0.8,0.2,0.4);
 			glVertex3fv(vertice[4]);
 			glVertex3fv(vertice[5]);
 			glVertex3fv(vertice[6]);
@@ -135,51 +92,132 @@ void prisma(char front, char back, char right, char left, char bottom, char top,
 		glEnd();
 }
 
-
-
-
-void display ( void )   // Creamos la funcion donde se dibuja
+void display(void)   // Creamos la funcion donde se dibuja
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Limiamos pantalla y Depth Buffer
-	glMatrixMode(GL_MODELVIEW);
+	//glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	//Dibujar
-	glTranslatef(0.0 + transX, 0.0 + transY, -5.0 + transZ);
+	glTranslatef(transX, transY, transZ);
 	glRotatef(angleX, 1.0, 0.0, 0.0);
 	glRotatef(angleY, 0.0, 1.0, 0.0);
 	glRotatef(angleZ, 0.0, 0.0, 1.0);
-	/*La fución recibe los argumentos (en ese orden):
-	Color front
-	Color back
-	Color right
-	Color left
-	Color bottom
-	Color top
-	base
-	altura
-	Los argumentos de colores son caracteres basados en el siguiente código de colores:
-	Verde fuerte ´V´
-	Verde claro ´v´
-	Azul fuerte ´Z´
-	Azul claro ´z´
-	Amarillo ´a´
-	Rojo ´r´
-	Morado ´m´
-	Cafe ´C´
-	Naranja ´n´
-	Negro ´N´
-	Blanco ´b
-	El código de colores se creo con la finalidad de facilitar la obtención de colores básicos, además de evitar tener 18 argumentos en la función,
-	los cual haría tediosa la llamada a función. Si quisieran obtenerse una gama de colores más amplia, habría que replantear la función de nuevo.
-	Base y altura son flotantes.´
-	*/
-	//Ejemplo de función
-	prisma('m','c','n','N','b','r',9.0,3.0);
-  									
-    glutSwapBuffers ( );
-    //glFlush();
-    // Swap The Buffers
+
+	//Poner Código Aquí.
+
+//A
+	glPushMatrix();
+		glTranslatef(0.0, 0.0, 0.0);
+		glScalef(10.0, 4.0, 6.0);
+		glColor3f(0.8, 0.2, 0.1);
+		prisma();
+	glPopMatrix();
+
+//B
+	glPushMatrix();
+		glTranslatef(-4.0, -3.0, 2.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//C
+	glPushMatrix();
+		glTranslatef(-4.0, -3.0, -2.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//D
+	glPushMatrix();
+		glTranslatef(4.0, -3.0, 2.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//E
+	glPushMatrix();
+		glTranslatef(4.0, -3.0, -2.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//F
+	glPushMatrix();
+		glTranslatef(-6.0, 2.0, 0.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+		
+//G
+	glPushMatrix();
+		glTranslatef(6.5, 0.5, 0.0);
+		glScalef(3.0, 1.0, 4.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//H
+	glPushMatrix();
+		glTranslatef(5.5, 1.5, 0.0);
+		glScalef(1.0, 1.0, 4.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//I
+	glPushMatrix();
+		glTranslatef(6.5, 1.5, 0.0);
+		glScalef(1.0, 1.0, 4.0);
+		glColor3f(0.0, 0.0, 0.0);
+		prisma();
+	glPopMatrix();
+
+//J
+	glPushMatrix();
+		glTranslatef(7.5, 1.5, 0.0);
+		glScalef(1.0, 1.0, 4.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//K
+	glPushMatrix();
+		glTranslatef(6.5, 2.5, 0.0);
+		glScalef(3.0, 1.0, 4.0);
+		glColor3f(1.0, 1.0, 1.0);
+		prisma();
+	glPopMatrix();
+
+//L
+	glPushMatrix();
+		glTranslatef(9.0, 1.0, 0.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(1.0, 0.4, 0.12);
+		prisma();
+	glPopMatrix();
+
+//M
+	glPushMatrix();
+		glTranslatef(6.5, 4.0, 3.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(0.8, 0.2, 0.1);
+		prisma();
+	glPopMatrix();
+
+//N
+	glPushMatrix();
+		glTranslatef(6.5, 4.0, -3.0);
+		glScalef(2.0, 2.0, 2.0);
+		glColor3f(0.8, 0.2, 0.1);
+		prisma();
+	glPopMatrix();
+
+  glutSwapBuffers ( );
+  // Swap The Buffers
 }
 
 void reshape ( int width , int height )   // Creamos funcion Reshape
@@ -195,90 +233,94 @@ void reshape ( int width , int height )   // Creamos funcion Reshape
 	glLoadIdentity();
 
 	// Tipo de Vista
-	//glOrtho(-5,5,-5,5,0.1,20);	
-	glFrustum (-0.1, 0.1,-0.1, 0.1, 0.05, 40.0);
+	//glOrtho(-5,5,-5,5,20,20);	
+	glFrustum (-0.1, 0.1,-0.1, 0.1, 0.1, 50.0);
+
+	glMatrixMode(GL_MODELVIEW);							// Seleccionamos Modelview Matrix
 }
 
-void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
+void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 {
-	switch ( key ) {
-		case 'r':
-		case 'R':
-			transZ +=0.2f;
-			printf("Posicion en Z: %f\n", transZ);
-			break;
-		case 'f':
-		case 'F':
-			transZ -=0.2f;
-			printf("Posicion en Z: %f\n", transZ);
-			break;
-		case 'a':
-		case 'A':
-			transX -=0.2f;
-			break;
-		case 'd':
-		case 'D':
-			transX +=0.2f;
-			break;
-		case 's':
-		case 'S':
-			transY -= 0.2f;
-			break;
-		case 'w':
-		case 'W':
-			transY += 0.2f;
-			break;
-		case 't'://Rotar eje Z
-		case 'T':
-			angleZ += 6.0f;
-			break;
-		case 'g':
-		case 'G':
-			angleZ -= 6.0f;
-			break;
-		case 27:        // Cuando Esc es presionado...
-			exit ( 0 );   // Salimos del programa
-		break;        
-		default:        // Cualquier otra
+	switch (key) {
+	case 'r':
+	case 'R':
+		transZ += 0.2f;
+		printf("Posicion en Z: %f\n", transZ);
 		break;
-  }
+	case 'f':
+	case 'F':
+		transZ -= 0.2f;
+		printf("Posicion en Z: %f\n", transZ);
+		break;
+	case 'a':
+	case 'A':
+		transX -= 0.2f;
+		break;
+	case 'd':
+	case 'D':
+		transX += 0.2f;
+		break;
+	case 's':
+	case 'S':
+		transY -= 0.2f;
+		break;
+	case 'w':
+	case 'W':
+		transY += 0.2f;
+		break;
+	case 't'://Rotar eje Z
+	case 'T':
+		angleZ += 6.0f;
+		break;
+	case 'g':
+	case 'G':
+		angleZ -= 6.0f;
+		break;
+	case 27:        // Cuando Esc es presionado...
+		exit(0);   // Salimos del programa
+		break;
+	default:        // Cualquier otra
+		break;
+	}
 	glutPostRedisplay();
 }
-
-void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas especiales (arrow keys)
+void arrow_keys(int a_keys, int x, int y)  // Funcion para manejo de teclas especiales (arrow keys)
 {
-  switch ( a_keys ) {
-    case GLUT_KEY_UP:     // Presionamos tecla ARRIBA...
+	switch (a_keys) {
+	case GLUT_KEY_UP:     // Presionamos tecla ARRIBA...
 		angleX += 6.0f;
 		break;
-      //glutFullScreen ( ); // Full Screen Mode
-      //break;
-    case GLUT_KEY_DOWN:               // Presionamos tecla ABAJO...
+		//glutFullScreen ( ); // Full Screen Mode
+		//break;
+	case GLUT_KEY_DOWN:               // Presionamos tecla ABAJO...
 		angleX -= 6.0f;
 		break;
-      //glutReshapeWindow ( 500, 500 ); // Cambiamos tamano de Ventana
-      //break;
+		//glutReshapeWindow ( 500, 500 ); // Cambiamos tamano de Ventana
+		//break;
 	case GLUT_KEY_LEFT:
 		angleY += 6.0f;
 		break;
 	case GLUT_KEY_RIGHT:
 		angleY -= 6.0f;
 		break;
-    default:
-      break;
-  }
-  glutPostRedisplay();
+	default:
+		break;
+	}
+	glutPostRedisplay();
 }
-
 
 int main ( int argc, char** argv )   // Main Function
 {
   glutInit            (&argc, argv); // Inicializamos OpenGL
   //glutInitDisplayMode (GLUT_RGBA | GLUT_SINGLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Sencillo )
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
+  screenW = glutGet(GLUT_SCREEN_WIDTH);
+  screenH = glutGet(GLUT_SCREEN_HEIGHT);
   glutInitWindowSize  (500, 500);	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
-  glutCreateWindow    ("Practica 3"); // Nombre de la Ventana
+  glutCreateWindow    ("Practica 4"); // Nombre de la Ventana
+  printf("Resolution H: %i \n", screenW);
+  printf("Resolution V: %i \n", screenH);
   InitGL ();						// Parametros iniciales de la aplicacion
   glutDisplayFunc     ( display );  //Indicamos a Glut función de dibujo
   glutReshapeFunc     ( reshape );	//Indicamos a Glut función en caso de cambio de tamano
