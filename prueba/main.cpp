@@ -120,10 +120,10 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Limiamos pantalla y Depth Buffer
 	//glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 	glTranslatef(transX, 0.0f, transZ);
 	glRotatef(angleY, 0.0, 1.0, 0.0);
 	glRotatef(angleX, 1.0, 0.0, 0.0);
+
 	//Poner Código Aquí.
 //Brazo detallado
 
@@ -174,33 +174,33 @@ void display(void)   // Creamos la funcion donde se dibuja
 			glColor3f(0.3, 0.5, 0.0);
 			//parte 1
 			glPushMatrix();
-				glScalef(0.2, 0.1, 1.0);
+				glScalef(0.2, 0.1, 0.50);
 				prisma();
 			glPopMatrix();
 			glTranslatef(0.1, 0.0, 0.0);
 			glRotatef(angPulgar2, 0.0, 0.0, 1.0);
 			glTranslatef(0.1, 0.0, 0.0);
 			glColor3f(0.3, 0.7, 1.0);
-			glScalef(0.2, 0.1, 1.0);
+			glScalef(0.2, 0.1, 0.50);
 			prisma();
 		glPopMatrix();
 		//Indice
 		//dedo2
 		glPushMatrix();
 			glTranslatef(0.1, -0.25, 0.0);
-			glRotatef(angIndice1, 0.0, 0.0, 1.0);
+			glRotatef(angIndice1, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.10, 0.0);
 			glColor3f(0.2, 0.5, 1.0);
 			//parte 1
 			glPushMatrix();
-				glScalef(0.1, 0.2, 1.0);
+				glScalef(0.1, 0.2, 0.25);
 				prisma();
 			glPopMatrix();
 			glTranslatef(0.0, -0.10, 0.0);
-			glRotatef(angIndice2, 0.0, 0.0, 1.0);
+			glRotatef(angIndice2, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.10, 0.0);
 			glColor3f(0.2, 0.7, 0.3);
-			glScalef(0.1, 0.2, 1.0);
+			glScalef(0.1, 0.2, 0.25);
 			prisma();
 		glPopMatrix();
 
@@ -209,19 +209,19 @@ void display(void)   // Creamos la funcion donde se dibuja
 		//Medio
 		glPushMatrix();
 			glTranslatef(0.0, -0.25, 0.0);
-			glRotatef(angMedio1, 0.0, 0.0, 1.0);
+			glRotatef(angMedio1, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.15, 0.0);
 			glColor3f(0.3, 0.5, 0.0);
 			//parte 1
 			glPushMatrix();
-				glScalef(0.1, 0.3, 1.0);
+				glScalef(0.1, 0.3, 0.25);
 				prisma();
 			glPopMatrix();
 			glTranslatef(0.0, -0.15, 0.0);
-			glRotatef(angMedio2, 0.0, 0.0, 1.0);
+			glRotatef(angMedio2, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.15, 0.0);
 			glColor3f(0.3, 0.7, 1.0);
-			glScalef(0.1, 0.3, 1.0);
+			glScalef(0.1, 0.3, 0.25);
 			prisma();
 		glPopMatrix();
 
@@ -229,19 +229,19 @@ void display(void)   // Creamos la funcion donde se dibuja
 		//Anular
 		glPushMatrix();
 			glTranslatef(-0.10, -0.25, 0.0);
-			glRotatef(angAnular1, 0.0, 0.0, 1.0);
+			glRotatef(angAnular1, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.10, 0.0);
 			glColor3f(0.3, 0.5, 0.4);
 			//parte 1
 			glPushMatrix();
-				glScalef(0.1, 0.2, 1.0);
+				glScalef(0.1, 0.2, 0.25);
 				prisma();
 			glPopMatrix();
 			glTranslatef(0.0, -0.10, 0.0);
-			glRotatef(angAnular2, 0.0, 0.0, 1.0);
+			glRotatef(angAnular2, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.10, 0.0);
 			glColor3f(0.3, 0.7, 0.3);
-			glScalef(0.1, 0.2, 1.0);
+			glScalef(0.1, 0.2, 0.25);
 			prisma();
 		glPopMatrix();
 
@@ -249,27 +249,65 @@ void display(void)   // Creamos la funcion donde se dibuja
 		//Menique
 		glPushMatrix();
 			glTranslatef(-0.20, -0.25, 0.0);
-			glRotatef(angMenique1, 0.0, 0.0, 1.0);
+			glRotatef(angMenique1, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.05, 0.0);
 			glColor3f(0.8, 0.5, 0.4);
 			//parte 1
 			glPushMatrix();
-				glScalef(0.1, 0.1, 1.0);
+				glScalef(0.1, 0.1, 0.25);
 				prisma();
 			glPopMatrix();
 			glTranslatef(0.0, -0.05, 0.0);
-			glRotatef(angMenique2, 0.0, 0.0, 1.0);
+			glRotatef(angMenique2, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, -0.05, 0.0);
 			glColor3f(0.3, 0.7, 0.9);
-			glScalef(0.1, 0.1, 1.0);
+			glScalef(0.1, 0.1, 0.25);
 			prisma();
 		glPopMatrix();
 
 	glPopMatrix();
-
-		
-	
-		
+	//Cuerpo
+	glTranslatef(-1.75, -1.25, 0.0);
+	glPushMatrix();
+		glScalef(3.0, 3.0, 1.0);
+		glColor3f(0.0, 0.0, 0.7);
+		prisma();
+	glPopMatrix();
+	//Pierna der
+	glPushMatrix();
+		glTranslatef(+1.0, -3.5, 0.0);
+		glScalef(1.0, 4.0, 1.0);
+		glColor3f(0.0, 0.7, 0.0);
+		prisma();
+	glPopMatrix();
+	//Pierna izq
+	glPushMatrix();
+		glTranslatef(-1.0, -3.5, 0.0);
+		glScalef(1.0, 4.0, 1.0);
+		glColor3f(0.0, 0.7, 0.0);
+		prisma();
+	glPopMatrix();
+	//cuello
+	glTranslatef(0.0, 2.0, 0.0);
+	glPushMatrix();
+		glScalef(0.5, 1.0, 1.0);
+		glColor3f(1.0, 0.5, 0.0);
+		prisma();
+	glPopMatrix();
+	//Cabeza
+	glTranslatef(0.0, 1.0, 0.0);
+	glPushMatrix();
+		glScalef(1.0, 1.0, 1.0);
+		glColor3f(1.0, 0.5, 0.0);
+		prisma();
+	glPopMatrix();
+	//Brazo	
+	glTranslatef(-1.75, -3.0, 0.0);
+	glPushMatrix();
+		glScalef(0.5, 3.0, 1.0);
+		glColor3f(1.0, 0.5, 0.0);
+	prisma();
+	glPopMatrix();
   											
 	glutSwapBuffers ( );
   // Swap The Buffers
@@ -299,91 +337,125 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 {
 	switch ( key ) {
 		//Manipulacion de brazo
+		//hpmbro
 		case 't':
 		case 'T':
-			angHombro = angHombro + 0.5f;
+			if (angHombro<90.0)
+				angHombro = angHombro + 0.5f;
 			break;
 		case 'y':
 		case 'Y':
-			angHombro = angHombro - 0.5f;
+			if (angHombro>0.0)
+				angHombro = angHombro - 0.5f;
 			break;
+		//codo
 		case 'u':
 		case 'U':
-			angCodo = angCodo + 0.5f;
+			if (angCodo<20.0)
+				angCodo = angCodo + 0.5f;
 			break;
 		case 'i':
 		case 'I':
-			angCodo = angCodo - 0.5f;
+			if (angCodo>0.0)
+				angCodo = angCodo - 0.5f;
 			break;
+		//mano
 		case 'o':
 		case 'O':
-			angMano = angMano + 0.5f;
+			if (angMano<17.5)
+				angMano = angMano + 0.5f;
 			break;
 		case 'p':
 		case 'P':
-			angMano = angMano - 0.5f;
+			if (angMano>-15.0)
+				angMano = angMano - 0.5f;
 			break;
+		//Pulgar
 		case 'k':
 		case 'K':
-			angPulgar1 = angPulgar1 + 0.5f;
+			if (angPulgar1<6.0)
+				angPulgar1 = angPulgar1 + 0.5f;
 			break;
 		case 'l':
 		case 'L':
-			angPulgar1 = angPulgar1 - 0.5f;
+			if (angPulgar1>-83.5)
+				angPulgar1 = angPulgar1 - 0.5f;
 			break;
 		case 'm':
-			angPulgar2 = angPulgar2 + 0.5f;
+			if (angPulgar2<0.0)
+				angPulgar2 = angPulgar2 + 0.5f;
 			break;
 		case 'M':
-			angPulgar2 = angPulgar2 - 0.5f;
+			if (angPulgar2>-76.0)
+				angPulgar2 = angPulgar2 - 0.5f;
 			break;
+		//indice
 		case 'z':
-			angIndice1 = angIndice1 + 0.5f;
+			if ( angIndice1<41.0)
+				angIndice1 = angIndice1 + 0.5f;
 			break;
 		case 'Z':
-			angIndice1 = angIndice1 - 0.5f;
+			if (angIndice1>-3.0)
+				angIndice1 = angIndice1 - 0.5f;
 			break;
 		case 'x':
-			angIndice2 = angIndice2 + 0.5f;
+			if (angIndice2<29.0)
+				angIndice2 = angIndice2 + 0.5f;
 			break;
 		case 'X':
-			angIndice2 = angIndice2 - 0.5f;
+			if (angIndice2>-2.0)
+				angIndice2 = angIndice2 - 0.5f;
 			break;
+		//medio
 		case 'c':
-			angMedio1 = angMedio1 + 0.5f;
+			if (angMedio1<41.0)
+				angMedio1 = angMedio1 + 0.5f;
 			break;
 		case 'C':
+			if (angMedio1>-3.0)
 			angMedio1 = angMedio1 - 0.5f;
 			break;
 		case 'v':
-			angMedio2= angMedio2 + 0.5f;
+			if (angMedio2<29.0)
+				angMedio2= angMedio2 + 0.5f;
 			break;
 		case 'V':
+			if (angMedio2>-2.0)
 			angMedio2 = angMedio2 - 0.5f;
 			break;
+	    //anular
 		case 'b':
-			angAnular1 = angAnular1 + 0.5f;
+			if (angAnular1<41.0)
+				angAnular1 = angAnular1 + 0.5f;
 			break;
 		case 'B':
-			angAnular1 = angAnular1 - 0.5f;
+			if (angAnular1>-3.0)
+				angAnular1 = angAnular1 - 0.5f;
 			break;
 		case 'n':
-			angAnular2 = angAnular2 + 0.5f;
+			if (angAnular2<29.0)
+				angAnular2 = angAnular2 + 0.5f;
 			break;
 		case 'N':
+			if (angAnular2>-2.0)
 			angAnular2 = angAnular2 - 0.5f;
 			break;
+		//Menique
 		case 'f':
-			angMenique1 = angMenique1 + 0.5f;
+			if (angMenique1<41.0)
+				angMenique1 = angMenique1 + 0.5f;
 			break;
 		case 'F':
-			angMenique1 = angMenique1 - 0.5f;
+			if (angMenique1>-3.0)
+				angMenique1 = angMenique1 - 0.5f;
 			break;
 		case 'g':
-			angMenique2 = angMenique2 + 0.5f;
+			if (angMenique2<29.0)
+				angMenique2 = angMenique2 + 0.5f;
 			break;
 		case 'G':
-			angMenique2 = angMenique2 - 0.5f;
+			if (angMenique2>-2.0)
+				angMenique2 = angMenique2 - 0.5f;
 			break;
 		case 'w':
 		case 'W':
@@ -407,6 +479,8 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		default:        // Cualquier otra
 		break;
   }
+  printf("%.2f\n", angMano);
+  printf("%.2f\n", angMano);
 	glutPostRedisplay();
 }
 
