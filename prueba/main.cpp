@@ -2,530 +2,334 @@
 //************************************************************//
 //************************************************************//
 //************** Alumno (s): *********************************//
-//Desiderio Gonzalez Ricardo Abraham
-//Visual studio 2015
 //*************											******//
 //*************											******//
 //************************************************************//
 #include "Main.h"
 
-float transZ = -5.0f;
-float transX = 0.0f;
-float angleX = 0.0f;
-float angleY = 0.0f;
-float angHombro = 0.0;
-float angCodo = 0.0;
-float angMano = 0.0;
-float angPulgar1 = 0.0;
-float angPulgar2 = 0.0;
-float angIndice1 = 0.0;
-float angIndice2 = 0.0;
-float angMedio1 = 0.0;
-float angMedio2 = 0.0;
-float angAnular1 = 0.0;
-float angAnular2 = 0.0;
-float angMenique1 = 0.0;
-float angMenique2 = 0.0;
-int screenW = 0.0;
-int screenH = 0.0;
+
+// Variables used to calculate frames per second: (Windows)
+DWORD dwFrames = 0;
+DWORD dwCurrentTime = 0;
+DWORD dwLastUpdateTime = 0;
+DWORD dwElapsedTime = 0;
 
 
-GLfloat Position[]= { 0.0f, 3.0f, 0.0f, 1.0f };			// Light Position
-GLfloat Position2[]= { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
+//Variables used to create movement
 
-void InitGL ( void )     // Inicializamos parametros
+int sol = 0;
+int mercurio = 0;
+int venus = 0;
+int tierra = 0;
+int luna = 0;
+int marte = 0;
+int jupiter = 0;
+int lunaj1 = 0;
+int lunaj2 = 0;
+int lunaj3 = 0;
+int lunaj4 = 0;
+int saturno = 0;
+int urano = 0;
+int neptuno = 0;
+
+
+float camaraZ = 0.0;
+float camaraX = 0.0;
+
+GLfloat SunDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };			// Diffuse Light Values
+GLfloat SunSpecular[] = { 1.0, 1.0, 1.0, 1.0 };				// Specular Light Values
+GLfloat SunPosition[] = { 0.0f, 0.0f, 0.0f, 1.0f };			// Light Position
+
+GLfloat EarthDiffuse[] = { 0.2f, 0.2f, 1.0f, 1.0f };			// Tierra
+GLfloat EarthSpecular[] = { 0.8, 0.8, 0.8, 1.0 };
+GLfloat EarthShininess[] = { 50.0 };
+
+GLfloat MoonDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };			// Luna
+GLfloat MoonSpecular[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat MoonShininess[] = { 50.0 };
+
+GLfloat MarsDiffuse[] = { 0.8f, 0.4f, 0.1f, 1.0f };			// Marte
+GLfloat MarsSpecular[] = { 1.0, 0.5, 0.0, 1.0 };
+GLfloat MarsShininess[] = { 50.0 };
+
+void InitGL(GLvoid)     // Inicializamos parametros
 {
-
-	glShadeModel(GL_SMOOTH);							// Habilitamos Smooth Shading
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);				// Negro de fondo
+
 	glClearDepth(1.0f);									// Configuramos Depth Buffer
 	glEnable(GL_DEPTH_TEST);							// Habilitamos Depth Testing
-
-	//Configuracion luz
-	glLightfv(GL_LIGHT0, GL_POSITION, Position);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Position2);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-
-
 	glDepthFunc(GL_LEQUAL);								// Tipo de Depth Testing a realizar
-	glEnable ( GL_COLOR_MATERIAL );
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-}
 
-void prisma(void)
-{
-	GLfloat vertice [8][3] = {
-				{0.5 ,-0.5, 0.5},    //Coordenadas Vértice 0 V0
-				{-0.5 ,-0.5, 0.5},    //Coordenadas Vértice 1 V1
-				{-0.5 ,-0.5, -0.5},    //Coordenadas Vértice 2 V2
-				{0.5 ,-0.5, -0.5},    //Coordenadas Vértice 3 V3
-				{0.5 ,0.5, 0.5},    //Coordenadas Vértice 4 V4
-				{0.5 ,0.5, -0.5},    //Coordenadas Vértice 5 V5
-				{-0.5 ,0.5, -0.5},    //Coordenadas Vértice 6 V6
-				{-0.5 ,0.5, 0.5},    //Coordenadas Vértice 7 V7
-				};
 
-		glBegin(GL_POLYGON);	//Front
-			glNormal3f( 0.0f, 0.0f, 1.0f);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[4]);
-			glVertex3fv(vertice[7]);
-			glVertex3fv(vertice[1]);
-		glEnd();
-
-		glBegin(GL_POLYGON);	//Right
-			glNormal3f( 1.0f, 0.0f, 0.0f);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[3]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[4]);
-		glEnd();
-
-		glBegin(GL_POLYGON);	//Back
-			glNormal3f( 0.0f, 0.0f, -1.0f);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[3]);
-			glVertex3fv(vertice[2]);
-		glEnd();
-
-		glBegin(GL_POLYGON);  //Left
-			glNormal3f( -1.0f, 0.0f, 0.0f);
-			glVertex3fv(vertice[1]);
-			glVertex3fv(vertice[7]);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[2]);
-		glEnd();
-
-		glBegin(GL_POLYGON);  //Bottom
-			glNormal3f( 0.0f, -1.0f, 0.0f);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[1]);
-			glVertex3fv(vertice[2]);
-			glVertex3fv(vertice[3]);
-		glEnd();
-
-		glBegin(GL_POLYGON);  //Top
-			glNormal3f( 0.0f, 1.0f, 0.0f);
-			glVertex3fv(vertice[4]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[7]);
-		glEnd();
 }
 
 void display(void)   // Creamos la funcion donde se dibuja
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Limiamos pantalla y Depth Buffer
-	//glMatrixMode(GL_MODELVIEW);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glTranslatef(transX, 0.0f, transZ);
-	glRotatef(angleY, 0.0, 1.0, 0.0);
-	glRotatef(angleX, 1.0, 0.0, 0.0);
 
-	//Poner Código Aquí.
-//Brazo detallado
+	glTranslatef(camaraX, 0.0, -5.0 + camaraZ);			//camara
 
 	glPushMatrix();
-		//hombro
-		glRotatef(angHombro, 0.0, 0.0, 1.0);
-		glPushMatrix();
-			glColor3f(0.0, 1.0, 0.0);
-			glScalef(0.5, 0.5, 1);
-			prisma();
-		glPopMatrix();
-		//bicep
-		glTranslatef(0.0, -0.75, 0.0);
-		glPushMatrix();
-			glScalef(0.5, 1.0, 1.0);
-			glColor3f(1.0, 0.0, 0.0);
-			prisma();
-		glPopMatrix();
-		//codo
-		glRotatef(angCodo, 0.0, 0.0, 1.0);
-		glTranslatef(0.0, -0.75, 0.0);
-		glPushMatrix();
-			glColor3f(0.0, 0.0, 1.0);
-			glScalef(0.5, 0.5, 1.0);
-			prisma();
-		glPopMatrix();
-		//Antebrazo
-		glTranslatef(0.0, -0.75, 0.0);
-			glPushMatrix();
-			glColor3f(1.0, 1.0, 0.0);
-			glScalef(0.5, 1.0, 1.0);
-			prisma();
-		glPopMatrix();
-		//mano
-		glTranslatef(0.0, -0.75, 0.0);
-		glRotatef(angMano, 0.0, 0.0, 1.0);
-		glPushMatrix();
-			glColor3f(0.0, 1.0, 1.0);
-			glScalef(0.5, 0.5, 1.0);
-			prisma();
-		glPopMatrix();
-		//pulgar
-		//dedo1
-		glPushMatrix();
-			glTranslatef(0.25, 0.0, 0.0);
-			glRotatef(angPulgar1, 0.0, 0.0, 1.0);
-			glTranslatef(0.1, 0.0, 0.0);
-			glColor3f(0.3, 0.5, 0.0);
-			//parte 1
-			glPushMatrix();
-				glScalef(0.2, 0.1, 0.50);
-				prisma();
-			glPopMatrix();
-			glTranslatef(0.1, 0.0, 0.0);
-			glRotatef(angPulgar2, 0.0, 0.0, 1.0);
-			glTranslatef(0.1, 0.0, 0.0);
-			glColor3f(0.3, 0.7, 1.0);
-			glScalef(0.2, 0.1, 0.50);
-			prisma();
-		glPopMatrix();
-		//Indice
-		//dedo2
-		glPushMatrix();
-			glTranslatef(0.1, -0.25, 0.0);
-			glRotatef(angIndice1, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.10, 0.0);
-			glColor3f(0.2, 0.5, 1.0);
-			//parte 1
-			glPushMatrix();
-				glScalef(0.1, 0.2, 0.25);
-				prisma();
-			glPopMatrix();
-			glTranslatef(0.0, -0.10, 0.0);
-			glRotatef(angIndice2, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.10, 0.0);
-			glColor3f(0.2, 0.7, 0.3);
-			glScalef(0.1, 0.2, 0.25);
-			prisma();
-		glPopMatrix();
-
-
-		//dedo3
-		//Medio
-		glPushMatrix();
-			glTranslatef(0.0, -0.25, 0.0);
-			glRotatef(angMedio1, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.15, 0.0);
-			glColor3f(0.3, 0.5, 0.0);
-			//parte 1
-			glPushMatrix();
-				glScalef(0.1, 0.3, 0.25);
-				prisma();
-			glPopMatrix();
-			glTranslatef(0.0, -0.15, 0.0);
-			glRotatef(angMedio2, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.15, 0.0);
-			glColor3f(0.3, 0.7, 1.0);
-			glScalef(0.1, 0.3, 0.25);
-			prisma();
-		glPopMatrix();
-
-		//dedo4
-		//Anular
-		glPushMatrix();
-			glTranslatef(-0.10, -0.25, 0.0);
-			glRotatef(angAnular1, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.10, 0.0);
-			glColor3f(0.3, 0.5, 0.4);
-			//parte 1
-			glPushMatrix();
-				glScalef(0.1, 0.2, 0.25);
-				prisma();
-			glPopMatrix();
-			glTranslatef(0.0, -0.10, 0.0);
-			glRotatef(angAnular2, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.10, 0.0);
-			glColor3f(0.3, 0.7, 0.3);
-			glScalef(0.1, 0.2, 0.25);
-			prisma();
-		glPopMatrix();
-
-		//dedo5
-		//Menique
-		glPushMatrix();
-			glTranslatef(-0.20, -0.25, 0.0);
-			glRotatef(angMenique1, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.05, 0.0);
-			glColor3f(0.8, 0.5, 0.4);
-			//parte 1
-			glPushMatrix();
-				glScalef(0.1, 0.1, 0.25);
-				prisma();
-			glPopMatrix();
-			glTranslatef(0.0, -0.05, 0.0);
-			glRotatef(angMenique2, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, -0.05, 0.0);
-			glColor3f(0.3, 0.7, 0.9);
-			glScalef(0.1, 0.1, 0.25);
-			prisma();
-		glPopMatrix();
-
+		glRotatef(sol, 0.0, 1.0, 0.0);	//El Sol gira sobre su eje
+		glColor3f(1.0, 1.0, 0.0);	//Sol amarillo
+		glutWireSphere(1.9, 12, 12);  //Draw Sun (radio,H,V);
 	glPopMatrix();
-	//Cuerpo
-	glTranslatef(-1.75, -1.25, 0.0);
+	//Mercurio
 	glPushMatrix();
-		glScalef(3.0, 3.0, 1.0);
-		glColor3f(0.0, 0.0, 0.7);
-		prisma();
+		glColor3f(0.545, 0.271, 0.075);
+		glRotatef(mercurio, 0.0, 1.0, 0.0);
+		glTranslatef(2.5, 0.2, 0.2);
+		glutWireSphere(0.3, 12, 12);
 	glPopMatrix();
-	//Pierna der
+	//Venus
 	glPushMatrix();
-		glTranslatef(+1.0, -3.5, 0.0);
-		glScalef(1.0, 4.0, 1.0);
-		glColor3f(0.0, 0.7, 0.0);
-		prisma();
+		glColor3f(0.957, 0.643, 0.376);
+		glRotatef(venus, 0.0, 1.0, 0.0);
+		glTranslatef(3.5, 0.2, 0.2);
+		glutWireSphere(0.4, 12, 12);
 	glPopMatrix();
-	//Pierna izq
+	//Tierra
 	glPushMatrix();
-		glTranslatef(-1.0, -3.5, 0.0);
-		glScalef(1.0, 4.0, 1.0);
-		glColor3f(0.0, 0.7, 0.0);
-		prisma();
+		glColor3f(0.0, 0.0, 1.0);
+		glPushMatrix();
+			glRotatef(tierra, 0.0, 1.0, 0.0);
+			glTranslatef(5.5, 0.2, 0.2);
+			glutWireSphere(0.5, 12, 12);
+		glPopMatrix();
+
+		//luna
+		glRotatef(tierra, 0.0, 1.0, 0.0);
+		glPushMatrix();
+			glTranslatef(5.5, 0.2, 0.2);
+			glColor3f(0.957, 0.9, 0.9);
+			glPushMatrix();
+				glRotatef(luna, 0.0, 0.0, 1.0);
+				glRotatef(luna + 5, 0.0, 1.0, 0.0);
+				glTranslatef(0.2, 0.8, 0.2);
+				glutWireSphere(0.2, 10, 10);
+			glPopMatrix();
+		glPopMatrix();
 	glPopMatrix();
-	//cuello
-	glTranslatef(0.0, 2.0, 0.0);
+	//Marte
 	glPushMatrix();
-		glScalef(0.5, 1.0, 1.0);
+
 		glColor3f(1.0, 0.5, 0.0);
-		prisma();
+		glRotatef(marte, 0.0, 1.0, 0.0);
+		glTranslatef(7.5, 0.2, 0.2);
+		glutWireSphere(0.3, 12, 12);
+
 	glPopMatrix();
-	//Cabeza
-	glTranslatef(0.0, 1.0, 0.0);
+	//Jupiter
 	glPushMatrix();
-		glScalef(1.0, 1.0, 1.0);
-		glColor3f(1.0, 0.5, 0.0);
-		prisma();
+
+		glColor3f(1.0, 0.0, 0.0);
+		glTranslatef(11.5, 0.2, 0.2);
+		glPushMatrix();
+			glRotatef(jupiter, 0.0, 1.0, 0.0);
+			glutWireSphere(1.2, 12, 12);
+		glPopMatrix();
+		//luna1
+		glPushMatrix();
+			glColor3f(0.957, 0.9, 0.9);
+			glRotatef(lunaj1, 0.0, 0.0, 1.0);
+			glTranslatef(1.6, 0.4, 0.2);
+			glRotatef(lunaj1 + 5, 0.0, 1.0, 0.0);
+			glutWireSphere(0.1, 10, 10);
+		glPopMatrix();
+		//luna2
+		glPushMatrix();
+			glColor3f(0.957, 0.9, 0.9);
+			glRotatef(lunaj2, 0.0, 0.0, 1.0);
+			glTranslatef(1.9, 0.4, 0.2);
+			glRotatef(lunaj2 + 5, 0.0, 1.0, 0.0);
+			glutWireSphere(0.1, 10, 10);
+		glPopMatrix();
+		//luna3
+		glPushMatrix();
+			glColor3f(0.957, 0.9, 0.9);
+			glRotatef(lunaj3, 0.0, 0.0, 1.0);
+			glTranslatef(2.2, 0.4, 0.2);
+			glRotatef(lunaj3 + 5, 0.0, 1.0, 0.0);
+			glutWireSphere(0.1, 10, 10);
+		glPopMatrix();
+		//luna4
+		glPushMatrix();
+			glColor3f(0.957, 0.9, 0.9);
+			glRotatef(lunaj4, 0.0, 0.0, 1.0);
+			glTranslatef(2.5, 0.4, 0.2);
+			glRotatef(lunaj4 + 5, 0.0, 1.0, 0.0);
+			glutWireSphere(0.1, 10, 10);
+		glPopMatrix();
+
 	glPopMatrix();
-	//Brazo	
-	glTranslatef(-1.75, -3.0, 0.0);
+
+//Saturno
 	glPushMatrix();
-		glScalef(0.5, 3.0, 1.0);
-		glColor3f(1.0, 0.5, 0.0);
-	prisma();
+
+		glColor3f(1.0, 1.0, 0.0);
+		glRotatef(saturno, 0.0, 1.0, 0.0);
+		glTranslatef(16.5, 0.2, 0.2);
+		glutWireSphere(0.7, 12, 12);
+		glColor3f(1.0, 0.0, 0.0);
+		glutWireTorus(0.15, 0.8, 10, 10);
+
 	glPopMatrix();
-  											
-	glutSwapBuffers ( );
-  // Swap The Buffers
+
+//urano
+	glPushMatrix();
+
+		glColor3f(0.5, 1.0, 1.0);
+		glRotatef(urano, 0.0, 1.0, 0.0);
+		glTranslatef(20.0, 0.2, 0.2);
+		glutWireSphere(0.7, 12, 12);
+		glColor3f(1.0, 0.0, 0.0);
+
+	glPopMatrix();
+
+//neptuno
+	glPushMatrix();
+
+		glColor3f(0.4, 0.0, 1.0);
+		glRotatef(neptuno, 0.0, 1.0, 0.0);
+		glTranslatef(22.5, 0.2, 0.2);
+		glutWireSphere(0.6, 12, 12);
+		glColor3f(1.0, 0.0, 0.0);
+
+	glPopMatrix();
+
+
+	glutSwapBuffers();
+
 }
 
-void reshape ( int width , int height )   // Creamos funcion Reshape
+void animacion()
 {
-  if (height==0)										// Prevenir division entre cero
+	// Calculate the number of frames per one second:
+	//dwFrames++;
+	dwCurrentTime = GetTickCount(); // Even better to use timeGetTime()
+	dwElapsedTime = dwCurrentTime - dwLastUpdateTime;
+
+	if (dwElapsedTime >= 30)
 	{
-		height=1;
+		//sol = (sol - 1) % 360;
+		mercurio = (mercurio - 4) % 360;
+		venus = (venus - 3) % 360;
+		tierra = (tierra - 1) % 360;
+		luna = (luna - 4) % 360;
+		marte = (marte - 2) % 360;
+		jupiter = (jupiter - 9) % 360;
+		lunaj1 = (lunaj1 - 2) % 360;
+		lunaj2 = (lunaj2 - 3) % 360;
+		lunaj3 = (lunaj3 - 1) % 360;
+		lunaj4= (lunaj4 - 4) % 360;
+		saturno = (saturno - 2) % 360;
+		urano = (urano - 5) % 360;
+		neptuno = (neptuno - 6) % 360;
+		dwLastUpdateTime = dwCurrentTime;
 	}
 
-	glViewport(0,0,width,height);	
+	glutPostRedisplay();
+}
+
+void reshape(int width, int height)   // Creamos funcion Reshape
+{
+	if (height == 0)										// Prevenir division entre cero
+	{
+		height = 1;
+	}
+
+	glViewport(0, 0, width, height);
 
 	glMatrixMode(GL_PROJECTION);						// Seleccionamos Projection Matrix
 	glLoadIdentity();
 
 	// Tipo de Vista
-	//glOrtho(-5,5,-5,5,0.2,20);	
-	glFrustum (-0.1, 0.1,-0.1, 0.1, 0.1, 50.0);
+
+	glFrustum(-0.1, 0.1, -0.1, 0.1, 0.1, 50.0);
 
 	glMatrixMode(GL_MODELVIEW);							// Seleccionamos Modelview Matrix
-	//glLoadIdentity();									
+														//glLoadIdentity();
 }
 
-void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
+void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 {
-	switch ( key ) {
-		//Manipulacion de brazo
-		//hpmbro
-		case 't':
-		case 'T':
-			if (angHombro<90.0)
-				angHombro = angHombro + 0.5f;
-			break;
-		case 'y':
-		case 'Y':
-			if (angHombro>0.0)
-				angHombro = angHombro - 0.5f;
-			break;
-		//codo
-		case 'u':
-		case 'U':
-			if (angCodo<20.0)
-				angCodo = angCodo + 0.5f;
-			break;
-		case 'i':
-		case 'I':
-			if (angCodo>0.0)
-				angCodo = angCodo - 0.5f;
-			break;
-		//mano
-		case 'o':
-		case 'O':
-			if (angMano<17.5)
-				angMano = angMano + 0.5f;
-			break;
-		case 'p':
-		case 'P':
-			if (angMano>-15.0)
-				angMano = angMano - 0.5f;
-			break;
-		//Pulgar
-		case 'k':
-		case 'K':
-			if (angPulgar1<6.0)
-				angPulgar1 = angPulgar1 + 0.5f;
-			break;
-		case 'l':
-		case 'L':
-			if (angPulgar1>-83.5)
-				angPulgar1 = angPulgar1 - 0.5f;
-			break;
-		case 'm':
-			if (angPulgar2<0.0)
-				angPulgar2 = angPulgar2 + 0.5f;
-			break;
-		case 'M':
-			if (angPulgar2>-76.0)
-				angPulgar2 = angPulgar2 - 0.5f;
-			break;
-		//indice
-		case 'z':
-			if ( angIndice1<41.0)
-				angIndice1 = angIndice1 + 0.5f;
-			break;
-		case 'Z':
-			if (angIndice1>-3.0)
-				angIndice1 = angIndice1 - 0.5f;
-			break;
-		case 'x':
-			if (angIndice2<29.0)
-				angIndice2 = angIndice2 + 0.5f;
-			break;
-		case 'X':
-			if (angIndice2>-2.0)
-				angIndice2 = angIndice2 - 0.5f;
-			break;
-		//medio
-		case 'c':
-			if (angMedio1<41.0)
-				angMedio1 = angMedio1 + 0.5f;
-			break;
-		case 'C':
-			if (angMedio1>-3.0)
-			angMedio1 = angMedio1 - 0.5f;
-			break;
-		case 'v':
-			if (angMedio2<29.0)
-				angMedio2= angMedio2 + 0.5f;
-			break;
-		case 'V':
-			if (angMedio2>-2.0)
-			angMedio2 = angMedio2 - 0.5f;
-			break;
-	    //anular
-		case 'b':
-			if (angAnular1<41.0)
-				angAnular1 = angAnular1 + 0.5f;
-			break;
-		case 'B':
-			if (angAnular1>-3.0)
-				angAnular1 = angAnular1 - 0.5f;
-			break;
-		case 'n':
-			if (angAnular2<29.0)
-				angAnular2 = angAnular2 + 0.5f;
-			break;
-		case 'N':
-			if (angAnular2>-2.0)
-			angAnular2 = angAnular2 - 0.5f;
-			break;
-		//Menique
-		case 'f':
-			if (angMenique1<41.0)
-				angMenique1 = angMenique1 + 0.5f;
-			break;
-		case 'F':
-			if (angMenique1>-3.0)
-				angMenique1 = angMenique1 - 0.5f;
-			break;
-		case 'g':
-			if (angMenique2<29.0)
-				angMenique2 = angMenique2 + 0.5f;
-			break;
-		case 'G':
-			if (angMenique2>-2.0)
-				angMenique2 = angMenique2 - 0.5f;
-			break;
-		case 'w':
-		case 'W':
-			transZ +=0.2f;
-			break;
-		case 's':
-		case 'S':
-			transZ -=0.2f;
-			break;
-		case 'a':
-		case 'A':
-			transX +=0.2f;
-			break;
-		case 'd':
-		case 'D':
-			transX -=0.2f;
-			break;
-		case 27:        // Cuando Esc es presionado...
-			exit ( 0 );   // Salimos del programa
-		break;        
-		default:        // Cualquier otra
+	switch (key) {
+	case 'w':   //Movimientos de camara
+	case 'W':
+		camaraZ += 0.5f;
 		break;
-  }
-  printf("%.2f\n", angMano);
-  printf("%.2f\n", angMano);
+	case 's':
+	case 'S':
+		camaraZ -= 0.5f;
+		break;
+	case 'a':
+	case 'A':
+		camaraX -= 0.5f;
+		break;
+	case 'd':
+	case 'D':
+		camaraX += 0.5f;
+		break;
+
+	case 'i':		//Movimientos de Luz
+	case 'I':
+
+		break;
+	case 'k':
+	case 'K':
+
+		break;
+
+	case 'l':   //Activamos/desactivamos luz
+	case 'L':
+		break;
+	case 27:        // Cuando Esc es presionado...
+		exit(0);   // Salimos del programa
+		break;
+	default:        // Cualquier otra
+		break;
+	}
 	glutPostRedisplay();
 }
 
-void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas especiales (arrow keys)
+void arrow_keys(int a_keys, int x, int y)  // Funcion para manejo de teclas especiales (arrow keys)
 {
-  switch ( a_keys ) {
-    case GLUT_KEY_UP:		// Presionamos tecla ARRIBA...
-		angleX +=2.0f;
+	switch (a_keys) {
+	case GLUT_KEY_UP:     // Presionamos tecla ARRIBA...
+
 		break;
-    case GLUT_KEY_DOWN:		// Presionamos tecla ABAJO...
-		angleX -=2.0f;
+	case GLUT_KEY_DOWN:               // Presionamos tecla ABAJO...
+
 		break;
 	case GLUT_KEY_LEFT:
-		angleY +=2.0f;
+
 		break;
 	case GLUT_KEY_RIGHT:
-		angleY -=2.0f;
+
 		break;
-    default:
-      break;
-  }
-  glutPostRedisplay();
+	default:
+		break;
+	}
+	glutPostRedisplay();
 }
 
 
-int main ( int argc, char** argv )   // Main Function
+int main(int argc, char** argv)   // Main Function
 {
-  glutInit            (&argc, argv); // Inicializamos OpenGL
-  glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
-  screenW = glutGet(GLUT_SCREEN_WIDTH);
-  screenH = glutGet(GLUT_SCREEN_HEIGHT);
-  glutInitWindowSize  (500, 500);	// Tamaño de la Ventana
-  glutInitWindowPosition (0, 0);	//Posicion de la Ventana
-  glutCreateWindow    ("Practica 5"); // Nombre de la Ventana
-  printf("Resolution H: %i \n", screenW);
-  printf("Resolution V: %i \n", screenH);
-  InitGL ();						// Parametros iniciales de la aplicacion
-  glutDisplayFunc     ( display );  //Indicamos a Glut función de dibujo
-  glutReshapeFunc     ( reshape );	//Indicamos a Glut función en caso de cambio de tamano
-  glutKeyboardFunc    ( keyboard );	//Indicamos a Glut función de manejo de teclado
-  glutSpecialFunc     ( arrow_keys );	//Otras
-  glutMainLoop        ( );          // 
+	glutInit(&argc, argv); // Inicializamos OpenGL
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
+	glutInitWindowSize(500, 500);	// Tamaño de la Ventana
+	glutInitWindowPosition(20, 60);	//Posicion de la Ventana
+	glutCreateWindow("Practica 6"); // Nombre de la Ventana
+	InitGL();						// Parametros iniciales de la aplicacion
+	glutDisplayFunc(display);  //Indicamos a Glut función de dibujo
+	glutReshapeFunc(reshape);	//Indicamos a Glut función en caso de cambio de tamano
+	glutKeyboardFunc(keyboard);	//Indicamos a Glut función de manejo de teclado
+	glutSpecialFunc(arrow_keys);	//Otras
+	glutIdleFunc(animacion);
+	glutMainLoop();          // 
 
-  return 0;
+	return 0;
 }
-
-
-
