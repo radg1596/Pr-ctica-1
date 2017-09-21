@@ -106,8 +106,9 @@ void display(void)   // Creamos la funcion donde se dibuja
 			glColor3f(0.957, 0.9, 0.9);
 			glPushMatrix();
 				glRotatef(luna, 0.0, 0.0, 1.0);
-				glRotatef(luna + 5, 0.0, 1.0, 0.0);
 				glTranslatef(0.2, 0.8, 0.2);
+				glRotatef(luna + 5, 0.0, 1.0, 0.0);
+				
 				glutWireSphere(0.2, 10, 10);
 			glPopMatrix();
 		glPopMatrix();
@@ -125,21 +126,27 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glPushMatrix();
 
 		glColor3f(1.0, 0.0, 0.0);
-		glTranslatef(11.5, 0.2, 0.2);
 		glPushMatrix();
 			glRotatef(jupiter, 0.0, 1.0, 0.0);
+			glTranslatef(11.5, 0.2, 0.2);
 			glutWireSphere(1.2, 12, 12);
 		glPopMatrix();
+
 		//luna1
+		glRotatef(jupiter, 0.0, 1.0, 0.0);
 		glPushMatrix();
+			glTranslatef(11.5, 0.2, 0.2);
 			glColor3f(0.957, 0.9, 0.9);
-			glRotatef(lunaj1, 0.0, 0.0, 1.0);
-			glTranslatef(1.6, 0.4, 0.2);
-			glRotatef(lunaj1 + 5, 0.0, 1.0, 0.0);
-			glutWireSphere(0.1, 10, 10);
+			glPushMatrix();
+				glRotatef(lunaj1, 0.0, 0.0, 1.0);
+				glTranslatef(1.6, 0.4, 0.2);
+				glRotatef(lunaj1 + 5, 0.0, 1.0, 0.0);
+				glutWireSphere(0.1, 10, 10);
+			glPopMatrix();
 		glPopMatrix();
 		//luna2
 		glPushMatrix();
+			glTranslatef(11.5, 0.2, 0.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glRotatef(lunaj2, 0.0, 0.0, 1.0);
 			glTranslatef(1.9, 0.4, 0.2);
@@ -148,6 +155,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 		//luna3
 		glPushMatrix();
+			glTranslatef(11.5, 0.2, 0.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glRotatef(lunaj3, 0.0, 0.0, 1.0);
 			glTranslatef(2.2, 0.4, 0.2);
@@ -156,6 +164,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 		//luna4
 		glPushMatrix();
+			glTranslatef(11.5, 0.2, 0.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glRotatef(lunaj4, 0.0, 0.0, 1.0);
 			glTranslatef(2.5, 0.4, 0.2);
@@ -213,18 +222,18 @@ void animacion()
 
 	if (dwElapsedTime >= 30)
 	{
-		//sol = (sol - 1) % 360;
+		sol = (sol - 1) % 360;
 		mercurio = (mercurio - 4) % 360;
 		venus = (venus - 3) % 360;
 		tierra = (tierra - 1) % 360;
 		luna = (luna - 4) % 360;
-		marte = (marte - 2) % 360;
-		jupiter = (jupiter - 9) % 360;
+		marte = (marte - 4) % 360;
+		jupiter = (jupiter - 2) % 360;
 		lunaj1 = (lunaj1 - 2) % 360;
 		lunaj2 = (lunaj2 - 3) % 360;
-		lunaj3 = (lunaj3 - 1) % 360;
-		lunaj4= (lunaj4 - 4) % 360;
-		saturno = (saturno - 2) % 360;
+		lunaj3 = (lunaj3 - 4) % 360;
+		lunaj4= (lunaj4 - 5) % 360;
+		saturno = (saturno - 7) % 360;
 		urano = (urano - 5) % 360;
 		neptuno = (neptuno - 6) % 360;
 		dwLastUpdateTime = dwCurrentTime;
