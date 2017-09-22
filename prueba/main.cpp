@@ -81,30 +81,31 @@ void display(void)   // Creamos la funcion donde se dibuja
 	//Mercurio
 	glPushMatrix();
 		glColor3f(0.545, 0.271, 0.075);
-		glRotatef(mercurio, 0.0, 1.0, 0.0);
-		glTranslatef(2.5, 0.2, 0.2);
+		glRotatef(mercurio, 1.0, 0.0, 0.0);
+		glTranslatef(0.2, 2.5, 0.2);
 		glutWireSphere(0.3, 12, 12);
 	glPopMatrix();
 	//Venus
 	glPushMatrix();
 		glColor3f(0.957, 0.643, 0.376);
-		glRotatef(venus, 0.0, 1.0, 0.0);
-		glTranslatef(3.5, 0.2, 0.2);
+		glRotatef(venus, 1.0, 0.0, 0.0);
+		glRotatef(20.0, 1.0, 1.0, 1.0);
+		glTranslatef(0.2, 3.5, 0.2);
 		glutWireSphere(0.4, 12, 12);
 	glPopMatrix();
 	//Tierra
 	glPushMatrix();
 		glColor3f(0.0, 0.0, 1.0);
 		glPushMatrix();
-			glRotatef(tierra, 0.0, 1.0, 0.0);
-			glTranslatef(5.5, 0.2, 0.2);
+			glRotatef(tierra, 0.0, 1.0, 1.0);
+			glTranslatef(5.5, 3.2, 3.2);
 			glutWireSphere(0.5, 12, 12);
 		glPopMatrix();
 
 		//luna
-		glRotatef(tierra, 0.0, 1.0, 0.0);
+		glRotatef(tierra, 0.0, 1.0, 1.0);
 		glPushMatrix();
-			glTranslatef(5.5, 0.2, 0.2);
+			glTranslatef(5.5, 3.2, 3.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glPushMatrix();
 				glRotatef(luna, 0.0, 0.0, 1.0);
@@ -120,7 +121,8 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 		glColor3f(1.0, 0.5, 0.0);
 		glRotatef(marte, 0.0, 1.0, 0.0);
-		glTranslatef(7.5, 0.2, 0.2);
+		glRotatef(20.0, 0.0, 0.0, 1.0);
+		glTranslatef(0.2, 0.2, 7.5);
 		glutWireSphere(0.3, 12, 12);
 
 	glPopMatrix();
@@ -129,15 +131,15 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 		glColor3f(1.0, 0.0, 0.0);
 		glPushMatrix();
-			glRotatef(jupiter, 0.0, 1.0, 0.0);
-			glTranslatef(11.5, 0.2, 0.2);
+			glRotatef(jupiter, 0.0, 0.0, 1.0);
+			glTranslatef(11.5, 3.2, 3.2);
 			glutWireSphere(1.2, 12, 12);
 		glPopMatrix();
 
 		//luna1
-		glRotatef(jupiter, 0.0, 1.0, 0.0);
+		glRotatef(jupiter, 0.0, 0.0, 1.0);
 		glPushMatrix();
-			glTranslatef(11.5, 0.2, 0.2);
+			glTranslatef(11.5, 3.2, 3.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glPushMatrix();
 				glRotatef(lunaj1, 0.0, 0.0, 1.0);
@@ -148,7 +150,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 		//luna2
 		glPushMatrix();
-			glTranslatef(11.5, 0.2, 0.2);
+			glTranslatef(11.5, 3.2, 3.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glRotatef(lunaj2, 0.0, 0.0, 1.0);
 			glTranslatef(1.9, 0.4, 0.2);
@@ -157,7 +159,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 		//luna3
 		glPushMatrix();
-			glTranslatef(11.5, 0.2, 0.2);
+			glTranslatef(11.5, 3.2, 3.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glRotatef(lunaj3, 0.0, 0.0, 1.0);
 			glTranslatef(2.2, 0.4, 0.2);
@@ -166,7 +168,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 		//luna4
 		glPushMatrix();
-			glTranslatef(11.5, 0.2, 0.2);
+			glTranslatef(11.5, 3.2, 3.2);
 			glColor3f(0.957, 0.9, 0.9);
 			glRotatef(lunaj4, 0.0, 0.0, 1.0);
 			glTranslatef(2.5, 0.4, 0.2);
@@ -181,7 +183,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 		glColor3f(1.0, 1.0, 0.0);
 		glRotatef(saturno, 0.0, 1.0, 0.0);
-		glTranslatef(16.5, 0.2, 0.2);
+		glTranslatef(16.5, 5.2, 10.2);
 		glutWireSphere(0.7, 12, 12);
 		glColor3f(1.0, 0.0, 0.0);
 		glutWireTorus(0.15, 0.8, 10, 10);
@@ -192,8 +194,8 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glPushMatrix();
 
 		glColor3f(0.5, 1.0, 1.0);
-		glRotatef(urano, 0.0, 1.0, 0.0);
-		glTranslatef(20.0, 0.2, 0.2);
+		glRotatef(urano, 0.0, 1.0, 1.0);
+		glTranslatef(20.0, 0.2, 10.2);
 		glutWireSphere(0.7, 12, 12);
 		glColor3f(1.0, 0.0, 0.0);
 
@@ -204,7 +206,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 		glColor3f(0.4, 0.0, 1.0);
 		glRotatef(neptuno, 0.0, 1.0, 0.0);
-		glTranslatef(22.5, 0.2, 0.2);
+		glTranslatef(22.5, 0.2, 10.2);
 		glutWireSphere(0.6, 12, 12);
 		glColor3f(1.0, 0.0, 0.0);
 
