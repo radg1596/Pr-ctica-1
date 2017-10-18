@@ -23,7 +23,7 @@
     <ClCompile Include="texture.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="main_prac8_ejerciciocasa.cpp">
+    <ClCompile Include="main_prac9_ejerciciocasa.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>

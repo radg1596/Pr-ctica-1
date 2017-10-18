@@ -28,6 +28,7 @@ CTexture t_techo;
 CTexture t_tronco;
 CTexture t_hojas;
 CTexture t_mar;
+CTexture vacio;
 
 int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 
@@ -36,7 +37,6 @@ int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 void InitGL ( GLvoid )     // Inicializamos parametros
 {
 	glClearColor(0.5f, 0.5f, 0.8f, 0.0f);				// Azul de fondo	
-
 	glEnable(GL_TEXTURE_2D);
 
 	//glShadeModel (GL_SMOOTH);
@@ -48,6 +48,12 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	glEnable(GL_DEPTH_TEST);							// Habilitamos Depth Testing
 	glDepthFunc(GL_LEQUAL);								// Tipo de Depth Testing a realizar
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+
+
+	vacio.LoadTGA("vacio.tga");//carga la textura
+	vacio.BuildGLTexture();
+	vacio.ReleaseImage();
 
 	t_piedra.LoadTGA("piedra.tga");//carga la textura
 	t_piedra.BuildGLTexture();
@@ -164,7 +170,77 @@ void prisma (GLuint textura1, float r)  //Funcion creacion prisma
 		glEnd();
 }
 
-void prismatf(GLuint textura1, float r)  //Funcion creacion prisma
+void prismaventana(GLuint textura1, float r)  //Funcion creacion prisma
+{
+
+	GLfloat vertice[8][3] = {
+		{ 0.5 ,-0.5, 0.5 },    //Coordenadas Vértice 0 V0
+		{ -0.5 ,-0.5, 0.5 },    //Coordenadas Vértice 1 V1
+		{ -0.5 ,-0.5, -0.5 },    //Coordenadas Vértice 2 V2
+		{ 0.5 ,-0.5, -0.5 },    //Coordenadas Vértice 3 V3
+		{ 0.5 ,0.5, 0.5 },    //Coordenadas Vértice 4 V4
+		{ 0.5 ,0.5, -0.5 },    //Coordenadas Vértice 5 V5
+		{ -0.5 ,0.5, -0.5 },    //Coordenadas Vértice 6 V6
+		{ -0.5 ,0.5, 0.5 },    //Coordenadas Vértice 7 V7
+	};
+
+
+	glBindTexture(GL_TEXTURE_2D, textura1);   // choose the texture to use.
+	glBegin(GL_POLYGON);	//Front
+	glColor3f(1.0, 1.0, 1.0);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glTexCoord2f(r, 0.0f);		 glVertex3fv(vertice[0]);//asignar vertices, coordenadas de textura
+	glTexCoord2f(r, r);			glVertex3fv(vertice[4]);
+	glTexCoord2f(0.0f, r);	glVertex3fv(vertice[7]);
+	glTexCoord2f(0.0f, 0.0f); 	glVertex3fv(vertice[1]);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, t_piedra.GLindex);
+	glBegin(GL_POLYGON);	//Right
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
+	glTexCoord2f(r, 0.0f); glVertex3fv(vertice[3]);
+	glTexCoord2f(r, r); glVertex3fv(vertice[5]);
+	glTexCoord2f(0.0f, r); glVertex3fv(vertice[4]);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, vacio.GLindex);
+	glBegin(GL_POLYGON);	//Back
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glTexCoord2f(0.0f, r); glVertex3fv(vertice[6]);
+	glTexCoord2f(r, r); glVertex3fv(vertice[5]);
+	glTexCoord2f(r, 0.0f); glVertex3fv(vertice[3]);
+	glTexCoord2f(0.0f, 0.0f);  glVertex3fv(vertice[2]);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, t_piedra.GLindex);
+	glBegin(GL_POLYGON);  //Left
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[1]);
+	glTexCoord2f(r, 0.0f); glVertex3fv(vertice[7]);
+	glTexCoord2f(r, r); glVertex3fv(vertice[6]);
+	glTexCoord2f(0.0f, r); glVertex3fv(vertice[2]);
+	glEnd();
+
+	glBegin(GL_POLYGON);  //Bottom
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
+	glTexCoord2f(r, 0.0f); glVertex3fv(vertice[1]);
+	glTexCoord2f(r, r); glVertex3fv(vertice[2]);
+	glTexCoord2f(0.0f, r); glVertex3fv(vertice[3]);
+	glEnd();
+
+	glBegin(GL_POLYGON);  //Top
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0, 0.0f); glVertex3fv(vertice[4]);
+	glTexCoord2f(r, 0.0f); glVertex3fv(vertice[5]);
+	glTexCoord2f(r, r); glVertex3fv(vertice[6]);
+	glTexCoord2f(0.0f, r); glVertex3fv(vertice[7]);
+	glEnd();
+}
+
+
+void prismafrontal(GLuint textura1, float r)  //Funcion creacion prisma
 {
 
 	GLfloat vertice[8][3] = {
@@ -190,7 +266,7 @@ void prismatf(GLuint textura1, float r)  //Funcion creacion prisma
 		glTexCoord2f(0.0f, 0.0f); 	glVertex3fv(vertice[1]);
 	glEnd();
 
-	glBindTexture(GL_TEXTURE_2D, NULL);
+	glBindTexture(GL_TEXTURE_2D, vacio.GLindex);
 	glBegin(GL_POLYGON);	//Right
 		glNormal3f(1.0f, 0.0f, 0.0f);
 		glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
@@ -199,7 +275,7 @@ void prismatf(GLuint textura1, float r)  //Funcion creacion prisma
 		glTexCoord2f(0.0f, r); glVertex3fv(vertice[4]);
 	glEnd();
 
-	glBindTexture(GL_TEXTURE_2D, textura1);
+	glBindTexture(GL_TEXTURE_2D, vacio.GLindex);
 	glBegin(GL_POLYGON);	//Back
 	glNormal3f(0.0f, 0.0f, -1.0f);
 	glTexCoord2f(0.0f, r); glVertex3fv(vertice[6]);
@@ -208,7 +284,7 @@ void prismatf(GLuint textura1, float r)  //Funcion creacion prisma
 	glTexCoord2f(0.0f, 0.0f);  glVertex3fv(vertice[2]);
 	glEnd();
 
-	glBindTexture(GL_TEXTURE_2D, NULL);
+	glBindTexture(GL_TEXTURE_2D, vacio.GLindex);
 	glBegin(GL_POLYGON);  //Left
 	glNormal3f(-1.0f, 0.0f, 0.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[1]);
@@ -217,6 +293,7 @@ void prismatf(GLuint textura1, float r)  //Funcion creacion prisma
 	glTexCoord2f(0.0f, r); glVertex3fv(vertice[2]);
 	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, vacio.GLindex);
 	glBegin(GL_POLYGON);  //Bottom
 	glNormal3f(0.0f, -1.0f, 0.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
@@ -225,6 +302,7 @@ void prismatf(GLuint textura1, float r)  //Funcion creacion prisma
 	glTexCoord2f(0.0f, r); glVertex3fv(vertice[3]);
 	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, vacio.GLindex);
 	glBegin(GL_POLYGON);  //Top
 	glNormal3f(0.0f, 1.0f, 0.0f);
 	glTexCoord2f(0.0, 0.0f); glVertex3fv(vertice[4]);
@@ -259,7 +337,10 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				glPushMatrix();//Puerta
 					glTranslated(3.0, 2.0, -0.5);
 					glScalef(2.0, 4.0, 1.0);
-					prisma(t_puerta.GLindex, 1.0f);
+					glEnable(GL_ALPHA_TEST);
+					glAlphaFunc(GL_GREATER, 0.1);
+					prismafrontal(t_puerta.GLindex, 1.0f);
+					glDisable(GL_ALPHA_TEST);
 				glPopMatrix();
 				
 				glPushMatrix();//Bloque2
@@ -271,7 +352,10 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				glPushMatrix();//Ventana
 					glTranslated(7.0, 2.0, -0.5);
 					glScalef(2.0, 4.0, 1.0);
-					prisma(t_ventana.GLindex, 1.0f);
+					glEnable(GL_ALPHA_TEST);
+					glAlphaFunc(GL_GREATER, 0.1);
+					prismaventana(t_ventana.GLindex, 1.0f);
+					glDisable(GL_ALPHA_TEST);
 				glPopMatrix();
 
 				glPushMatrix();//Bloque3
@@ -469,6 +553,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 					glScalef(6.0, 6.0, 6.0);
 					prisma(t_hojas.GLindex, 8.0f);
 				glPopMatrix();
+
+
 
 			glPopMatrix();
 
