@@ -19,15 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="figuras.cpp" />
+    <ClCompile Include="main_practica11.cpp" />
+    <ClCompile Include="texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="figuras.h" />
     <ClInclude Include="texture.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="figuras.cpp" />
-    <ClCompile Include="main_prac10new.cpp" />
-    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{98CF6141-A8F1-46A1-A7FE-9C6AAB754E77}</ProjectGuid>
